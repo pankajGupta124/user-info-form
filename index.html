@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>User Info Form</title>
+<style>
+body {
+font-family: Arial, sans-serif;
+background: #f4f4f4;
+padding: 20px;
+}
+
+.container {
+max-width: 500px;
+margin: auto;
+background: white;
+padding: 20px;
+border-radius: 12px;
+box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+}
+
+input, textarea {
+width: 100%;
+margin-top: 10px;
+margin-bottom: 20px;
+padding: 10px;
+border-radius: 6px;
+border: 1px solid #ccc;
+}
+
+button {
+padding: 10px 20px;
+background-color: #4CAF50;
+color: white;
+border: none;
+border-radius: 6px;
+cursor: pointer;
+}
+
+.result {
+margin-top: 30px;
+}
+
+img {
+max-width: 100%;
+
+border-radius: 8px;
+margin-top: 10px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>Enter Your Information</h2>
+<form id="userForm">
+<input type="text" id="name" placeholder="Your Name" required />
+<input type="email" id="email" placeholder="Your Email" required />
+<textarea id="bio" placeholder="Short Bio" rows="3"></textarea>
+<input type="file" id="image" accept="image/*" required />
+<button type="submit">Submit</button>
+</form>
+
+<div class="result" id="result"></div>
+</div>
+
+<script>
+const form = document.getElementById("userForm");
+const resultDiv = document.getElementById("result");
+
+form.addEventListener("submit", function(event) {
+event.preventDefault();
+
+const name = document.getElementById("name").value;
+const email = document.getElementById("email").value;
+const bio = document.getElementById("bio").value;
+const imageFile = document.getElementById("image").files[0];
+
+if (imageFile) {
+const reader = new FileReader();
+reader.onload = function(e) {
+resultDiv.innerHTML = `
+<h3>User Info:</h3>
+<p><strong>Name:</strong> ${name}</p>
+<p><strong>Email:</strong> ${email}</p>
+<p><strong>Bio:</strong> ${bio}</p>
+<img src="${e.target.result}" alt="Profile Image"/>
+`;
+};
+reader.readAsDataURL(imageFile);
+}
+});
+</script>
+</body>
+</html>
